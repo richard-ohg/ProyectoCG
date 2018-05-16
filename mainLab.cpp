@@ -29,7 +29,7 @@ void mueble_buro();
 void mueble_armario();
 void mueble_librero();
 void lampara();
-void pato();
+void paloma();
 void taza_banio();
 void mueble_banio();
 void mueble_banio_toallas();
@@ -120,12 +120,12 @@ GLfloat Position2[]= { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
 float xx=0.0, yy = 0.0, zz = 0.0;
 float tamx = 1.0, tamy = 1.0, tamz = 1.0;
 
-//	Variables para animar al pato
-GLfloat pos_pato_x = 0.f;
-GLfloat pos_pato_y = 0.f;
-GLfloat pos_pato_z = 0.f;
-GLfloat rot_pato = 0.f;
-GLfloat ant_pos_pato_z = 0.f;
+//	Variables para animar al paloma
+GLfloat pos_paloma_x = -7.f;
+GLfloat pos_paloma_y = 0.f;
+GLfloat pos_paloma_z = -7.f;
+GLfloat rot_paloma = 0.f;
+GLfloat ant_pos_paloma_z = 0.f;
 
 //	Variables para animar la pelota
 GLfloat pos_ball_x = 0.f;
@@ -142,7 +142,7 @@ const GLfloat gravity = 9.81;
 int estadoPelota = 1;
 
 // 1 (Adelante), 2(Atras), 3(Giro)
-int estadoPato = 1;
+int estadopaloma = 1;
 
 //	Variables para animar la textura
 GLdouble estadoTelevision = 1.0;
@@ -1540,12 +1540,17 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glPopMatrix();
 			
 
+			glPushMatrix();
+			glTranslatef(0, 7, 0);
+			paloma();
+			glPopMatrix();
+
 
 
 			/*
 			glPushMatrix();
 			glTranslatef(11.4,0.4,-63.4);
-			pato();
+			paloma();
 			glPopMatrix();
 
 			cocina();
@@ -1940,45 +1945,45 @@ void animacion()
 		mov_agua.t_fin = 1.0;
 	}
 
+	// Animación televisión
 	++estadoTelevision;
 	if(estadoTelevision == 140) estadoTelevision = 1;
 
-	switch (estadoPato)
+	//animación paloma
+	switch (estadopaloma)
 	{
 		case 1:
-			pos_pato_z += 0.01;
-			if(pos_pato_z >= 6)
+			pos_paloma_z += 0.1;
+			if(pos_paloma_z >= 7)
 			{
-				estadoPato = 2;
-				ant_pos_pato_z = pos_pato_z;
+				estadopaloma = 2;
+				ant_pos_paloma_z = pos_paloma_z;
 			}
 			break;
 		case 2:
-			pos_pato_z += 0.01;
-			pos_pato_x += 0.05;
-			rot_pato += 3;
-			if(rot_pato >= 180)
+			pos_paloma_x += 0.1;
+			rot_paloma = 90;
+			if(pos_paloma_x >= 7)
 			{
-				estadoPato = 3;
-				ant_pos_pato_z = pos_pato_z;
+				estadopaloma = 3;
+				ant_pos_paloma_z = pos_paloma_z;
 			}
 			break;
 		case 3:
-			pos_pato_z -= 0.01;
-			if(pos_pato_z <= -10)
+			pos_paloma_z -= 0.1;
+			rot_paloma = 180;
+			if(pos_paloma_z <= -7)
 			{
-				estadoPato = 4;
+				estadopaloma = 4;
 			}
 			break;
 		case 4:
-			pos_pato_z -= 0.01;
-			pos_pato_x -= 0.05;
-			rot_pato += 3;
-			if(rot_pato >= 360)
+			pos_paloma_x -= 0.1;
+			rot_paloma += 3;
+			if(pos_paloma_x <= -7)
 			{
-				rot_pato = 0;
-				estadoPato = 1;
-				pos_pato_x = 0;
+				rot_paloma = 0;
+				estadopaloma = 1;
 			}
 			break;
 	}
@@ -3023,12 +3028,12 @@ void mesa_cocina()
 	glPopMatrix();	
 }
 
-void pato()
+void paloma()
 {
 	glPushMatrix();
 
-	glTranslatef(pos_pato_x, pos_pato_y, pos_pato_z);
-	glRotatef(rot_pato, 0, 1, 0);
+	glTranslatef(pos_paloma_x, pos_paloma_y, pos_paloma_z);
+	glRotatef(rot_paloma, 0, 1, 0);
 
 	glPushMatrix();//Ala derecha
 	glTranslatef(0.25,0.1,0);
