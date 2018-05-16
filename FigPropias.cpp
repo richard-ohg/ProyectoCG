@@ -1985,7 +1985,7 @@ void Figures::u_esfera(const GLfloat &r, const GLuint &meridianos,
 			glNormal3fv(vertices[3]);
 			glTexCoord2f(1, 0); glVertex3fv(vertices[3]);*/
 			glNormal3fv(vertices[0]);
-			glTexCoord2f(ctext_s*i, -ctext_t*j); glVertex3fv(vertices[0]);
+			glTexCoord2f(ctext_s*i , -ctext_t*j); glVertex3fv(vertices[0]);
 			glNormal3fv(vertices[1]);
 			glTexCoord2f(ctext_s*i, -ctext_t*(j + 1)); glVertex3fv(vertices[1]);
 			glNormal3fv(vertices[2]);

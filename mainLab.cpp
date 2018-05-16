@@ -219,6 +219,7 @@ CTexture estante;
 CTexture fondo_lad;
 CTexture centro_mesa;
 CTexture plata;
+CTexture ball_basq;
 
 //CTexture tree;
 
@@ -237,78 +238,29 @@ void saveFrame ( void )
 	KeyFrame[FrameIndex].rot_pelotaX = rot_pelotaX;
 	KeyFrame[FrameIndex].rot_pelotaY = rot_pelotaY;
 	KeyFrame[FrameIndex].rot_pelotaZ = rot_pelotaZ;
-
-	KeyFrame[FrameIndex].giroNudillo1 = giroNudillo1;
-	KeyFrame[FrameIndex].giroNudillo1Z = giroNudillo1Z;
-	KeyFrame[FrameIndex].giroArt11 = giroArt11;
-	KeyFrame[FrameIndex].giroArt21 = giroArt21;
-	KeyFrame[FrameIndex].giroNudillo2 = giroNudillo2;
-	KeyFrame[FrameIndex].giroNudillo2Z = giroNudillo2Z;
-	KeyFrame[FrameIndex].giroArt12 = giroArt12;
-	KeyFrame[FrameIndex].giroArt22 = giroArt22;
-	KeyFrame[FrameIndex].giroNudillo3 = giroNudillo3;
-	KeyFrame[FrameIndex].giroArt13 = giroArt13;
-	KeyFrame[FrameIndex].giroArt23 = giroArt23;
-	KeyFrame[FrameIndex].giroNudillo4 = giroNudillo4;
-	KeyFrame[FrameIndex].giroArt14 = giroArt14;
-	KeyFrame[FrameIndex].giroArt24 = giroArt24;
-	KeyFrame[FrameIndex].giroNudillo5 = giroNudillo5;
-	KeyFrame[FrameIndex].giroArt15 = giroArt15;
 			
 	FrameIndex++;
 }
 
 void resetElements( void )
 {
-	transZ = KeyFrame[0].transZ;
-	transX = KeyFrame[0].transX;
-	giroX = KeyFrame[0].giroX;
-	giroY = KeyFrame[0].giroY;
-	giroZ = KeyFrame[0].giroZ;
-
-	giroNudillo1 = KeyFrame[0].giroNudillo1;
-	giroNudillo1Z = KeyFrame[0].giroNudillo1Z;
-	giroArt11 = KeyFrame[0].giroArt11;
-	giroArt21 = KeyFrame[0].giroArt21;
-	giroNudillo2 = KeyFrame[0].giroNudillo2;
-	giroNudillo2Z = KeyFrame[0].giroNudillo2Z;
-	giroArt12 = KeyFrame[0].giroArt12;
-	giroArt22 = KeyFrame[0].giroArt22;
-	giroNudillo3 = KeyFrame[0].giroNudillo3;
-	giroArt13 = KeyFrame[0].giroArt13;
-	giroArt23 = KeyFrame[0].giroArt23;
-	giroNudillo4 = KeyFrame[0].giroNudillo4;
-	giroArt14 = KeyFrame[0].giroArt14;
-	giroArt24 = KeyFrame[0].giroArt24;
-	giroNudillo5 = KeyFrame[0].giroNudillo5;
-	giroArt15 = KeyFrame[0].giroArt15;
+	mov_pelotaX = KeyFrame[0].mov_pelotaX;
+	mov_pelotaY = KeyFrame[0].mov_pelotaY;
+	mov_pelotaZ = KeyFrame[0].mov_pelotaZ;
+	rot_pelotaX = KeyFrame[0].rot_pelotaX;
+	rot_pelotaY = KeyFrame[0].rot_pelotaY;
+	rot_pelotaZ = KeyFrame[0].rot_pelotaZ;
 
 }
 
 void interpolation ( void )
 {
-	KeyFrame[playIndex].IncZ = (KeyFrame[playIndex + 1].transZ - KeyFrame[playIndex].transZ) / i_max_steps;
-	KeyFrame[playIndex].IncX = (KeyFrame[playIndex + 1].transX - KeyFrame[playIndex].transX) / i_max_steps;	
-	KeyFrame[playIndex].IncRotX = (KeyFrame[playIndex + 1].giroX - KeyFrame[playIndex].giroX) / i_max_steps;
-	KeyFrame[playIndex].IncRotY = (KeyFrame[playIndex + 1].giroY - KeyFrame[playIndex].giroY) / i_max_steps;
-	KeyFrame[playIndex].IncRotZ = (KeyFrame[playIndex + 1].giroZ - KeyFrame[playIndex].giroZ) / i_max_steps;	
-
-	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].giroNudillo1 - KeyFrame[playIndex].giroNudillo1) / i_max_steps;	
-	KeyFrame[playIndex].rotInc2 = (KeyFrame[playIndex + 1].giroArt11 - KeyFrame[playIndex].giroArt11) / i_max_steps;
-	KeyFrame[playIndex].rotInc3 = (KeyFrame[playIndex + 1].giroArt21 - KeyFrame[playIndex].giroArt21) / i_max_steps;
-	KeyFrame[playIndex].rotInc4 = (KeyFrame[playIndex + 1].giroNudillo2 - KeyFrame[playIndex].giroNudillo2) / i_max_steps;
-	KeyFrame[playIndex].rotInc5 = (KeyFrame[playIndex + 1].giroArt12 - KeyFrame[playIndex].giroArt12) / i_max_steps;
-	KeyFrame[playIndex].rotInc6 = (KeyFrame[playIndex + 1].giroArt22 - KeyFrame[playIndex].giroArt22) / i_max_steps;
-	KeyFrame[playIndex].rotInc7 = (KeyFrame[playIndex + 1].giroNudillo3 - KeyFrame[playIndex].giroNudillo3) / i_max_steps;	
-	KeyFrame[playIndex].rotInc8 = (KeyFrame[playIndex + 1].giroArt13 - KeyFrame[playIndex].giroArt13) / i_max_steps;
-	KeyFrame[playIndex].rotInc9 = (KeyFrame[playIndex + 1].giroArt23 - KeyFrame[playIndex].giroArt23) / i_max_steps;
-	KeyFrame[playIndex].rotInc10 = (KeyFrame[playIndex + 1].giroNudillo4 - KeyFrame[playIndex].giroNudillo4) / i_max_steps;
-	KeyFrame[playIndex].rotInc11 = (KeyFrame[playIndex + 1].giroArt14 - KeyFrame[playIndex].giroArt14) / i_max_steps;
-	KeyFrame[playIndex].rotInc12 = (KeyFrame[playIndex + 1].giroArt24 - KeyFrame[playIndex].giroArt24) / i_max_steps;
-	KeyFrame[playIndex].rotInc13 = (KeyFrame[playIndex + 1].giroNudillo5 - KeyFrame[playIndex].giroNudillo5) / i_max_steps;
-	KeyFrame[playIndex].rotInc14 = (KeyFrame[playIndex + 1].giroArt15 - KeyFrame[playIndex].giroArt15) / i_max_steps;
-	KeyFrame[playIndex].rotInc15 = (KeyFrame[playIndex + 1].giroNudillo1Z - KeyFrame[playIndex].giroNudillo1Z) / i_max_steps;
-	KeyFrame[playIndex].rotInc16 = (KeyFrame[playIndex + 1].giroNudillo2Z - KeyFrame[playIndex].giroNudillo2Z) / i_max_steps;
+	KeyFrame[playIndex].IncX = (KeyFrame[playIndex + 1].mov_pelotaX - KeyFrame[playIndex].mov_pelotaX) / i_max_steps;
+	KeyFrame[playIndex].IncY = (KeyFrame[playIndex + 1].mov_pelotaY - KeyFrame[playIndex].mov_pelotaY) / i_max_steps;
+	KeyFrame[playIndex].IncZ = (KeyFrame[playIndex + 1].mov_pelotaZ - KeyFrame[playIndex].mov_pelotaZ) / i_max_steps;	
+	KeyFrame[playIndex].IncRotX = (KeyFrame[playIndex + 1].rot_pelotaX - KeyFrame[playIndex].rot_pelotaX) / i_max_steps;
+	KeyFrame[playIndex].IncRotY = (KeyFrame[playIndex + 1].rot_pelotaY - KeyFrame[playIndex].rot_pelotaY) / i_max_steps;
+	KeyFrame[playIndex].IncRotZ = (KeyFrame[playIndex + 1].rot_pelotaZ - KeyFrame[playIndex].rot_pelotaZ) / i_max_steps;	
 
 }
 
@@ -495,238 +447,6 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	tree_tex.BuildGLTexture();
 	tree_tex.ReleaseImage();
 
-//<<<<<<< HEAD
-	KeyFrame[0].posX = 0;
-	KeyFrame[0].posY = 2.4;
-	KeyFrame[0].posZ = -3.5;
-	KeyFrame[0].rotRodIzq = 0;
-	KeyFrame[0].rotRodDer = 0;
-	KeyFrame[0].giroMonito = 0;
-	KeyFrame[0].movBrazoDer = 0;
-	KeyFrame[0].movBrazoIzq = 0;
-	KeyFrame[0].movCuerpo = 0;
-	KeyFrame[0].rotBrazoDer = 0;
-	KeyFrame[0].rotBrazoIzq = 0;
-
-	KeyFrame[1].posX = 0;
-	KeyFrame[1].posY = 2.4;
-	KeyFrame[1].posZ = -3.5;
-	KeyFrame[1].rotRodIzq = 0;
-	KeyFrame[1].rotRodDer = 0;
-	KeyFrame[1].giroMonito = 77.0;
-	KeyFrame[1].movBrazoDer = 0;
-	KeyFrame[1].movBrazoIzq = 0;
-	KeyFrame[1].movCuerpo = 0;
-	KeyFrame[1].rotBrazoDer = -91.0;
-	KeyFrame[1].rotBrazoIzq = 83.0;
-
-	KeyFrame[2].posX = 0;
-	KeyFrame[2].posY = 2.4;
-	KeyFrame[2].posZ = -3.5;
-	KeyFrame[2].rotRodIzq = 0;
-	KeyFrame[2].rotRodDer = 0;
-	KeyFrame[2].giroMonito = 77.0;
-	KeyFrame[2].movBrazoDer = 31.0;
-	KeyFrame[2].movBrazoIzq = 33.0;
-	KeyFrame[2].movCuerpo = 0;
-	KeyFrame[2].rotBrazoDer = -91.0;
-	KeyFrame[2].rotBrazoIzq = 83.0;
-
-	KeyFrame[3].posX = 0;
-	KeyFrame[3].posY = 2.2;
-	KeyFrame[3].posZ = -3.5;
-	KeyFrame[3].rotRodIzq = 49.0;
-	KeyFrame[3].rotRodDer = 44.0;
-	KeyFrame[3].giroMonito = 77.0;
-	KeyFrame[3].movBrazoDer = -23.0;
-	KeyFrame[3].movBrazoIzq = -36.0;
-	KeyFrame[3].movCuerpo = 0;
-	KeyFrame[3].rotBrazoDer = -91.0;
-	KeyFrame[3].rotBrazoIzq = 83.0;
-
-	KeyFrame[4].posX = 0;
-	KeyFrame[4].posY = 2.2;
-	KeyFrame[4].posZ = -3.5;
-	KeyFrame[4].rotRodIzq = 15.0;
-	KeyFrame[4].rotRodDer = 17.0;
-	KeyFrame[4].giroMonito = 77.0;
-	KeyFrame[4].movBrazoDer = 40.0;
-	KeyFrame[4].movBrazoIzq = 28.0;
-	KeyFrame[4].movCuerpo = 0;
-	KeyFrame[4].rotBrazoDer = -91.0;
-	KeyFrame[4].rotBrazoIzq = 83.0;
-
-	KeyFrame[5].posX = 0;
-	KeyFrame[5].posY = 2.4;
-	KeyFrame[5].posZ = -3.5;
-	KeyFrame[5].rotRodIzq = 46.0;
-	KeyFrame[5].rotRodDer = 51.0;
-	KeyFrame[5].giroMonito = 77.0;
-	KeyFrame[5].movBrazoDer = -17.0;
-	KeyFrame[5].movBrazoIzq = -41.0;
-	KeyFrame[5].movCuerpo = 0;
-	KeyFrame[5].rotBrazoDer = -91.0;
-	KeyFrame[5].rotBrazoIzq = 83.0;
-
-	KeyFrame[6].posX = 0;
-	KeyFrame[6].posY = 2.4;
-	KeyFrame[6].posZ = -3.5;
-	KeyFrame[6].rotRodIzq = 9.0;
-	KeyFrame[6].rotRodDer = 23.0;
-	KeyFrame[6].giroMonito = 77.0;
-	KeyFrame[6].movBrazoDer = 33.0;
-	KeyFrame[6].movBrazoIzq = 29.0;
-	KeyFrame[6].movCuerpo = 0;
-	KeyFrame[6].rotBrazoDer = -91.0;
-	KeyFrame[6].rotBrazoIzq = 83.0;
-
-	KeyFrame[7].posX = 0;
-	KeyFrame[7].posY = 2.2;
-	KeyFrame[7].posZ = -3.5;
-	KeyFrame[7].rotRodIzq = 46.0;
-	KeyFrame[7].rotRodDer = 43.0;
-	KeyFrame[7].giroMonito = 77.0;
-	KeyFrame[7].movBrazoDer = -22.0;
-	KeyFrame[7].movBrazoIzq = -36.0;
-	KeyFrame[7].movCuerpo = 0;
-	KeyFrame[7].rotBrazoDer = -91.0;
-	KeyFrame[7].rotBrazoIzq = 83.0;
-
-	KeyFrame[8].posX = 0;
-	KeyFrame[8].posY = 2.4;
-	KeyFrame[8].posZ = -3.5;
-	KeyFrame[8].rotRodIzq = 3.0;
-	KeyFrame[8].rotRodDer = 8.0;
-	KeyFrame[8].giroMonito = 77.0;
-	KeyFrame[8].movBrazoDer = 43.0;
-	KeyFrame[8].movBrazoIzq = 26.0;
-	KeyFrame[8].movCuerpo = 0.0;
-	KeyFrame[8].rotBrazoDer = -91.0;
-	KeyFrame[8].rotBrazoIzq = 83.0;
-
-	KeyFrame[9].posX = 0;
-	KeyFrame[9].posY = 2.2;
-	KeyFrame[9].posZ = -3.5;
-	KeyFrame[9].rotRodIzq = 43.0;
-	KeyFrame[9].rotRodDer = 45.0;
-	KeyFrame[9].giroMonito = 77.0;
-	KeyFrame[9].movBrazoDer = -31.0;
-	KeyFrame[9].movBrazoIzq = -42.0;
-	KeyFrame[9].movCuerpo = 0;
-	KeyFrame[9].rotBrazoDer = -91.0;
-	KeyFrame[9].rotBrazoIzq = 83.0;
-
-	KeyFrame[10].posX = 0;
-	KeyFrame[10].posY = 2.4;
-	KeyFrame[10].posZ = -3.5;
-	KeyFrame[10].rotRodIzq = 1.0;
-	KeyFrame[10].rotRodDer = 11.0;
-	KeyFrame[10].giroMonito = 77.0;
-	KeyFrame[10].movBrazoDer = 41.0;
-	KeyFrame[10].movBrazoIzq = 32.0;
-	KeyFrame[10].movCuerpo = 0;
-	KeyFrame[10].rotBrazoDer = -91.0;
-	KeyFrame[10].rotBrazoIzq = 83.0;
-
-	KeyFrame[11].posX = 0;
-	KeyFrame[11].posY = 2.2;
-	KeyFrame[11].posZ = -3.5;
-	KeyFrame[11].rotRodIzq = 43.0;
-	KeyFrame[11].rotRodDer = 56.0;
-	KeyFrame[11].giroMonito = 77.0;
-	KeyFrame[11].movBrazoDer = -23.0;
-	KeyFrame[11].movBrazoIzq = -47.0;
-	KeyFrame[11].movCuerpo = 0;
-	KeyFrame[11].rotBrazoDer = -91.0;
-	KeyFrame[11].rotBrazoIzq = 83.0;
-
-	KeyFrame[12].posX = 0;
-	KeyFrame[12].posY = 2.4;
-	KeyFrame[12].posZ = -3.5;
-	KeyFrame[12].rotRodIzq = 6.0;
-	KeyFrame[12].rotRodDer = 10.0;
-	KeyFrame[12].giroMonito = 77.0;
-	KeyFrame[12].movBrazoDer = 34.0;
-	KeyFrame[12].movBrazoIzq = 27.0;
-	KeyFrame[12].movCuerpo = 0;
-	KeyFrame[12].rotBrazoDer = -91.0;
-	KeyFrame[12].rotBrazoIzq = 83.0;
-
-	KeyFrame[13].posX = 0;
-	KeyFrame[13].posY = 2.2;
-	KeyFrame[13].posZ = -3.5;
-	KeyFrame[13].rotRodIzq = 6.0;
-	KeyFrame[13].rotRodDer = 10.0;
-	KeyFrame[13].giroMonito = -1.0;
-	KeyFrame[13].movBrazoDer = 12.0;
-	KeyFrame[13].movBrazoIzq = 6.0;
-	KeyFrame[13].movCuerpo = 0;
-	KeyFrame[13].rotBrazoDer = -91.0;
-	KeyFrame[13].rotBrazoIzq = 83.0;
-
-	KeyFrame[14].posX = 0;
-	KeyFrame[14].posY = 2.4;
-	KeyFrame[14].posZ = -3.5;
-	KeyFrame[14].rotRodIzq = 6.0;
-	KeyFrame[14].rotRodDer = 10.0;
-	KeyFrame[14].giroMonito = -82.0;
-	KeyFrame[14].movBrazoDer = -20.0;
-	KeyFrame[14].movBrazoIzq = -26.0;
-	KeyFrame[14].movCuerpo = 0;
-	KeyFrame[14].rotBrazoDer = -91.0;
-	KeyFrame[14].rotBrazoIzq = 83.0;
-
-	KeyFrame[15].posX = 0;
-	KeyFrame[15].posY = 2.2;
-	KeyFrame[15].posZ = -3.5;
-	KeyFrame[15].rotRodIzq = 42.0;
-	KeyFrame[15].rotRodDer = 44.0;
-	KeyFrame[15].giroMonito = -82.0;
-	KeyFrame[15].movBrazoDer = 37.0;
-	KeyFrame[15].movBrazoIzq = 21.0;
-	KeyFrame[15].movCuerpo = 0;
-	KeyFrame[15].rotBrazoDer = -91.0;
-	KeyFrame[15].rotBrazoIzq = 83.0;
-
-	KeyFrame[16].posX = 0;
-	KeyFrame[16].posY = 2.4;
-	KeyFrame[16].posZ = -3.5;
-	KeyFrame[16].rotRodIzq = -15.0;
-	KeyFrame[16].rotRodDer = 6.0;
-	KeyFrame[16].giroMonito = -82.0;
-	KeyFrame[16].movBrazoDer = -25.0;
-	KeyFrame[16].movBrazoIzq = -37.0;
-	KeyFrame[16].movCuerpo = 0;
-	KeyFrame[16].rotBrazoDer = -91.0;
-	KeyFrame[16].rotBrazoIzq = 83.0;
-
-	KeyFrame[17].posX = 0;
-	KeyFrame[17].posY = 2.2;
-	KeyFrame[17].posZ = -3.5;
-	KeyFrame[17].rotRodIzq = 9.0;
-	KeyFrame[17].rotRodDer = 44.0;
-	KeyFrame[17].giroMonito = -82.0;
-	KeyFrame[17].movBrazoDer = 35.0;
-	KeyFrame[17].movBrazoIzq = 15.0;
-	KeyFrame[17].movCuerpo = 0;
-	KeyFrame[17].rotBrazoDer = -91.0;
-	KeyFrame[17].rotBrazoIzq = 83.0;
-
-	KeyFrame[18].posX = 0;
-	KeyFrame[18].posY = 2.4;
-	KeyFrame[18].posZ = -3.5;
-	KeyFrame[18].rotRodIzq = -1.0;
-	KeyFrame[18].rotRodDer = 5.0;
-	KeyFrame[18].giroMonito = -82.0;
-	KeyFrame[18].movBrazoDer = -23.0;
-	KeyFrame[18].movBrazoIzq = -48.0;
-	KeyFrame[18].movCuerpo = 0;
-	KeyFrame[18].rotBrazoDer = -91.0;
-	KeyFrame[18].rotBrazoIzq = 83.0;
-
-
-
-//=======
 	window_texture.LoadTGA("textures/window.tga");
 	window_texture.BuildGLTexture();
 	window_texture.ReleaseImage();
@@ -734,6 +454,26 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	ball.LoadTGA("textures/ball.tga");
 	ball.BuildGLTexture();
 	ball.ReleaseImage();
+
+	ball_basq.LoadTGA("textures/balon_basq.tga");
+	ball_basq.BuildGLTexture();
+	ball_basq.ReleaseImage();
+
+	for(int i=0; i<MAX_FRAMES; i++)
+	{
+		KeyFrame[i].mov_pelotaX = 0;
+		KeyFrame[i].mov_pelotaY = 0;
+		KeyFrame[i].mov_pelotaZ = 0;
+		KeyFrame[i].rot_pelotaX = 0;
+		KeyFrame[i].rot_pelotaY = 0;
+		KeyFrame[i].rot_pelotaZ = 0;
+		KeyFrame[i].IncX = 0;
+		KeyFrame[i].IncY = 0;
+		KeyFrame[i].IncZ = 0;
+		KeyFrame[i].IncRotX = 0;
+		KeyFrame[i].IncRotY = 0;
+		KeyFrame[i].IncRotZ = 0;
+	}
 
 	//	posicion     (0, 2.5, 3)
 	//	hacia donde  (0, 2.5, 0)
@@ -1239,8 +979,14 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glPopMatrix();
 
 			glPushMatrix();
-				glTranslatef(mov_pelotaX, mov_pelotaY, mov_pelotaZ)
-				figures.u_esfera(2, 20, 20, ball.GLindex);
+				
+				glTranslatef(30 + mov_pelotaX, 2 + mov_pelotaY, 10 + mov_pelotaZ);
+				glRotatef(rot_pelotaX, 1, 0, 0);
+				glRotatef(rot_pelotaY, 0, 1, 0);
+				glRotatef(rot_pelotaZ, 0, 0, 1);
+				//glEnable(GL_LIGHTING);
+				figures.u_esfera(2, 20, 20, ball_basq.GLindex);
+				//glDisable(GL_LIGHTING);
 			glPopMatrix();		
 
 		glPopMatrix(); 
@@ -1297,7 +1043,7 @@ void animacion()
 	}
 
 
-	//Movimiento del monito
+	//Movimiento de la pelota
 	if (play)
 	{
 
@@ -1313,28 +1059,25 @@ void animacion()
 			else //Next frame interpolations
 			{
 				i_curr_steps = 0; //Reset counter
-								  //Interpolation
-				KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].rotRodDerInc = (KeyFrame[playIndex + 1].rotRodDer - KeyFrame[playIndex].rotRodDer) / i_max_steps;
-				KeyFrame[playIndex].giroMonitoInc = (KeyFrame[playIndex + 1].giroMonito - KeyFrame[playIndex].giroMonito) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoDerInc = (KeyFrame[playIndex + 1].movBrazoDer - KeyFrame[playIndex].movBrazoDer) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movBrazoIzqInc = (KeyFrame[playIndex + 1].movBrazoIzq - KeyFrame[playIndex].movBrazoIzq) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].rotBrazoDerInc = (KeyFrame[playIndex + 1].rotBrazoDer - KeyFrame[playIndex].rotBrazoDer) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].rotBrazoIzqInc = (KeyFrame[playIndex + 1].rotBrazoIzq - KeyFrame[playIndex].rotBrazoIzq) / i_max_steps;		//100 frames
-				KeyFrame[playIndex].movCuerpoInc = (KeyFrame[playIndex + 1].movCuerpo - KeyFrame[playIndex].movCuerpo) / i_max_steps;
+				interpolation();
 			}
 		}
 		else
 		{	//Draw information
 
 
+			mov_pelotaX += KeyFrame[playIndex].IncX;
+			mov_pelotaY += KeyFrame[playIndex].IncY;
+			mov_pelotaZ += KeyFrame[playIndex].IncZ;
+			rot_pelotaX += KeyFrame[playIndex].IncRotX;
+			rot_pelotaY += KeyFrame[playIndex].IncRotY;
+			rot_pelotaZ += KeyFrame[playIndex].IncRotZ;
+
+			/*
 			posX += KeyFrame[playIndex].incX;
 			posY += KeyFrame[playIndex].incY;
 			posZ += KeyFrame[playIndex].incZ;
-
+			
 			movCuerpo += KeyFrame[playIndex].movCuerpoInc;
 
 			rotRodIzq += KeyFrame[playIndex].rotInc;
@@ -1344,8 +1087,7 @@ void animacion()
 
 			movBrazoIzq += KeyFrame[playIndex].movBrazoIzqInc;
 			rotBrazoDer += KeyFrame[playIndex].rotBrazoDerInc;
-			rotBrazoIzq += KeyFrame[playIndex].rotBrazoIzqInc;
-
+			rotBrazoIzq += KeyFrame[playIndex].rotBrazoIzqInc;*/
 			
 
 			i_curr_steps++;
@@ -1353,13 +1095,13 @@ void animacion()
 
 	}
 
-	frame++;
+	/*frame++;
 	time2 = glutGet(GLUT_ELAPSED_TIME);
 	if (time2 - timebase > 1000) {
 		sprintf(s, "FPS:%4.2f", frame*1000.0 / (time2 - timebase));
 		timebase = time2;
 		frame = 0;
-	}
+	}*/
 
 	//	Movimiento de la pelota
 	switch(estadoPelota){
@@ -1430,7 +1172,8 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			estadoPelota = 1;
 			break;
 
-		case 'w':   //Movimientos de camara
+		//Movimientos de camara
+		case 'w':   
 		case 'W':
 			objCamera.Move_Camera( CAMERASPEED+0.2 );
 			break;
@@ -1486,33 +1229,51 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			break;
 
 		case 'u':
+			mov_pelotaX += 0.1;
+			break;
 		case 'U':
-			zz -= 0.2;
+			mov_pelotaX -= 0.1;
+			//zz -= 0.2;
 			break;
 
 		case 'j':
+			mov_pelotaY += 0.1;
+			break;
 		case 'J':
-			zz += 0.2;
+			mov_pelotaY -= 0.1;
+			//zz += 0.2;
 			break;
 
 		case 'h':
+			mov_pelotaZ += 0.1;
+			break;
 		case 'H':
-			xx -= 0.2;
+			mov_pelotaZ -= 0.1;
+			//xx -= 0.2;
 			break;
 
 		case 'k':
+			rot_pelotaX += 10;
+			break;
 		case 'K':
-			xx += 0.2;
+			rot_pelotaX -= 10;
+			//xx += 0.2;
 			break;
 
 		case 'y':
+			rot_pelotaY += 10;
+			break;
 		case 'Y':
-			yy += 0.2;
+			rot_pelotaY -= 10;
+			//yy += 0.2;
 			break;
 
 		case 'n':
+			rot_pelotaZ += 10;
+			break;
 		case 'N':
-			yy -= 0.2;
+			rot_pelotaZ -= 10;
+			//yy -= 0.2;
 			break;
 
 		case '1':
@@ -1540,66 +1301,31 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 
 		case 'l':
 		case 'L':
-			printf("(xx,yy,zz) (%f,%f,%f)\n", xx,yy,zz);
-			//printf("(tamx,tamy,tamz) (%f,%f,%f)\n", tamx,tamy,tamz);
-			//printf("(mPos) (%f, %f, %f)\n", objCamera.mPos.x, objCamera.mPos.y, objCamera.mPos.z);
-			//printf("(mView) (%f, %f, %f)\n", objCamera.mView.x, objCamera.mView.y, objCamera.mView.z);
-			//printf("(mUp) (%f, %f, %f)\n", objCamera.mUp.x, objCamera.mUp.y, objCamera.mUp.z);
-			
-			/*for(int i = 1; i <= FrameIndex; i++){
-				//printf("posX: %f\n", posX);
-				//printf("posY: %f\n", posY);
-				//printf("posZ: %f\n", posZ);
-				printf("rotRodIzq: %f\n", KeyFrame[i].rotRodIzq);
-				printf("rotRodDer: %f\n", KeyFrame[i].rotRodDer);
-				printf("giroMonito: %f\n", KeyFrame[i].giroMonito);
-				printf("movBrazoDer: %f\n", KeyFrame[i].movBrazoDer);
-				printf("movBrazoIzq: %f\n", KeyFrame[i].movBrazoIzq);
-				printf("movCuerpo: %f\n", KeyFrame[i].movCuerpo);
-				printf("rotBrazoDer: %f\n", KeyFrame[i].rotBrazoDer);
-				printf("rotBrazoIzq: %f\n", KeyFrame[i].rotBrazoIzq);
-			}*/
+			if(play==false && (FrameIndex>1))
+			{
 
-			/*
-			KeyFrame[0].posX = 0;
-	KeyFrame[0].posY = 2.5;
-	KeyFrame[0].posZ = -3.5;
-	KeyFrame[0].rotRodIzq = 0;
-	KeyFrame[0].rotRodDer = 0;
-	KeyFrame[0].giroMonito = 0;
-	KeyFrame[0].movBrazoDer = 0;
-	KeyFrame[0].movBrazoIzq = 0;
-	KeyFrame[0].movCuerpo = 0;
-	KeyFrame[0].rotBrazoDer = 0;
-	KeyFrame[0].rotBrazoIzq = 0;
-			*/
+				resetElements();
+				//First Interpolation				
+				interpolation();
 
+				play=true;
+				playIndex=0;
+				i_curr_steps = 0;
+			}
+			else
+			{
+				play=false;
+			}
 			break;
 
 		case 'o':		//
-	case 'O':
-		if (FrameIndex<MAX_FRAMES)
-		{
-			printf("frameindex %d\n", FrameIndex);
-
-			KeyFrame[FrameIndex].posX = posX;
-			KeyFrame[FrameIndex].posY = posY;
-			KeyFrame[FrameIndex].posZ = posZ;
-
-			KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
-			KeyFrame[FrameIndex].rotRodDer = rotRodDer;
-			KeyFrame[FrameIndex].giroMonito = giroMonito;
-			KeyFrame[FrameIndex].movBrazoDer = movBrazoDer;
-			KeyFrame[FrameIndex].movBrazoIzq = movBrazoIzq;
-			KeyFrame[FrameIndex].rotBrazoDer = rotBrazoDer;
-			KeyFrame[FrameIndex].rotBrazoIzq = rotBrazoIzq;
-			KeyFrame[FrameIndex].movCuerpo = movCuerpo;
-
-			FrameIndex++;
-		}
-
-		break;
-
+		case 'O':
+			if(FrameIndex<MAX_FRAMES)
+				{
+					saveFrame();
+				}
+			break;
+/*
 	case 'e':
 	case 'E':
 		if (play == false && (FrameIndex>1))
@@ -1638,7 +1364,7 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 		{
 			play = false;
 		}
-		break;
+		break;*/
 
 		case 'x':
 		rotRodIzq++;
