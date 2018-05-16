@@ -216,6 +216,7 @@ CTexture door;
 CTexture ball;
 CTexture estante;
 CTexture fondo_lad;
+CTexture centro_mesa;
 
 //CTexture tree;
 
@@ -305,6 +306,10 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	fondo_lad.LoadTGA("textures/ladrillo_fachada.tga");
 	fondo_lad.BuildGLTexture();
 	fondo_lad.ReleaseImage();
+
+	centro_mesa.LoadTGA("textures/centro_mesa.tga");
+	centro_mesa.BuildGLTexture();
+	centro_mesa.ReleaseImage();
 
 	t1.LoadTGA("textures/t1.tga");
 	t1.BuildGLTexture();
@@ -1251,10 +1256,8 @@ void cama(void){
 
 	glPushMatrix();
 
-	glTranslatef(-16.75,6,5.65);
-
-		glTranslatef(22, 1.6, -11.6);
-		//glScalef(1.4, 0.6, 3);
+	glTranslatef(10, 0, 15);
+	glRotatef(-90, 0, 1, 0);
 
 		glPushMatrix(); //pata 1 derecha
 		glTranslatef(1.3+0.4,-0.75+0.1,0.40+0.8);
@@ -1424,37 +1427,37 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glPopMatrix();
 
 
-			glPushMatrix();
+			glPushMatrix(); //comedor 
 				//glTranslatef(0,0,34);
-				glPushMatrix();
-					glTranslatef(-7.25, 2 ,-1.5);
+				glPushMatrix(); //silla 1
+					glTranslatef(-7.25, 1 ,-1.5);
 					//glRotatef(-90,0,1,0);
 					glScalef(2,2,2);
 					silla();
 				glPopMatrix();
 
-				glPushMatrix();
-					glTranslatef(-7.25, 2, 4.5);
+				glPushMatrix(); //silla 2
+					glTranslatef(-7.25, 1, 4.5);
 					glRotatef(180,0,1,0);
 					glScalef(2,2,2);
 					silla();
 				glPopMatrix();
 
-				glPushMatrix();
-					glTranslatef(-10, 2, 1.5);
+				glPushMatrix(); //silla 3
+					glTranslatef(-10, 1, 1.5);
 					glRotatef(90,0,1,0);
 					glScalef(2,2,2);
 					silla();
 				glPopMatrix();
 
-				glPushMatrix();
-					glTranslatef(-4.5, 2, 1.5);
+				glPushMatrix(); //silla 4
+					glTranslatef(-4.5, 1, 1.5);
 					glRotatef(-90,0,1,0);
 					glScalef(2,2,2);
 					silla();
 				glPopMatrix();
 
-				glPushMatrix();
+				glPushMatrix(); //mesa central del comedor
 					glTranslatef(-7.2, -1, 1.5);
 					glRotatef(45,0,1,0);
 					glScalef(1.5,1,1.5);
@@ -1463,9 +1466,79 @@ void display ( void )   // Creamos la funcion donde se dibuja
 				glColor3f(1,1,1);
 			glPopMatrix();
 
-	
+			glPushMatrix(); //cama 
+				cama();
+			glPopMatrix();
 
-
+			glPushMatrix(); //televisión
+				glTranslatef(10, 4, 10);
+				glRotatef(-90,1,0,0);
+				glPushMatrix(); //mueble que sostiene la television
+					glColor3f(0.3529,0.1764,0.0862);
+					glRotatef(90,1,0,0);
+					glTranslatef(0, -2.8, 0);
+					glScalef(1.6, 3, 0.8);
+					figures.u_prisma_mueble(madera.GLindex,tocador.GLindex);
+					glColor3f(1,1,1);
+				glPopMatrix();
+				if (estadoTelevision >= 1 && estadoTelevision <= 10){
+				figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t1.GLindex);
+				glutPostRedisplay();
+				}
+				else if (estadoTelevision >= 11 && estadoTelevision <= 20){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t2.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 21 && estadoTelevision <= 30){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t3.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 31 && estadoTelevision <= 40){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t4.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 41 && estadoTelevision <= 50){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t5.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 51 && estadoTelevision <= 60){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t6.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 61 && estadoTelevision <= 70){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t7.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 71 && estadoTelevision <= 80){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t8.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 81 && estadoTelevision <= 90){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t9.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 91 && estadoTelevision <= 100){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t10.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 101 && estadoTelevision <= 110){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t11.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 111 && estadoTelevision <= 120){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t12.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 121 && estadoTelevision <= 130){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t13.GLindex);
+					glutPostRedisplay();
+				}	
+				else if (estadoTelevision >= 131 && estadoTelevision <= 140){
+					figures.u_prisma_tele(0.25,2.5,2.5,negroMate.GLindex,t14.GLindex);
+					glutPostRedisplay();
+				}
+			glPopMatrix();
+			
 
 
 
@@ -2081,17 +2154,17 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			objCamera.Position_Camera(9.5, 2.5f, 40, 9.5, 2.5f, 38, 0, 1, 0);
 			break;
 
-		//Tecla para colocar la camara al interior de un cuarto de la casa
+		//Tecla para colocar la camara en la cama
 		case 'c':
 		case 'C':
-			objCamera.Position_Camera(16.27, 9.5f, -9.68, 14, 9.5f, -7, 0, 1, 0);
+			objCamera.Position_Camera(10, 3, 16, 10, 3, 12, 0, 1, 0);
 			break;
 
 		//Tecla para colocar la camara a un lado de la alberca
 		case 'p':
 		case 'P':
 			//objCamera.Position_Camera(22.13, 6.69f, -38.55, -48.94, 2.5f, -69.66, 0, 1, 0);
-			objCamera.Position_Camera(22.13, 6.69f, -38.55, 20, 4.0f, -40, 0, 1, 0);
+			objCamera.Position_Camera(-12.4, 3, 17.5, 12.4, 3, -10.5, 0, 1, 0);
 			break;
 
 		//Tecla para colocar la camara en una vista isometrica de la casa
@@ -3717,7 +3790,10 @@ void mesa_sala()
 				glPopMatrix();
 				//glColor3f(1.0, 1.0, 1.0);
 				glScalef(2.0, 1.0, 4.0);
-				figures.prisma(madera.GLindex, ball.GLindex);
+				glEnable(GL_ALPHA_TEST);
+				glAlphaFunc(GL_GREATER, 0.1);
+				figures.prisma(centro_mesa.GLindex, centro_mesa.GLindex);
+				glDisable(GL_ALPHA_TEST);
 			glPopMatrix();
 			//glColor3f(1.0, 1.0, 1.0);
 			glScalef(2.0,1.0,1.0);  

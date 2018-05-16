@@ -72,9 +72,9 @@ void Figures::prisma(const GLuint &textura1, const GLuint &textura6)
 		glBindTexture(GL_TEXTURE_2D, textura6);   // choose the texture to use.
 		glBegin(GL_POLYGON);  //Top
 			glNormal3f( 0.0f, 1.0f, 0.0f);
-			glTexCoord2f(4.0, 0.0f); glVertex3fv(vertice[4]);
-			glTexCoord2f(4.0, 4.0f); glVertex3fv(vertice[5]);
-			glTexCoord2f(0.0, 4.0f); glVertex3fv(vertice[6]);
+			glTexCoord2f(1.0, 0.0f); glVertex3fv(vertice[4]);
+			glTexCoord2f(1.0, 1.0f); glVertex3fv(vertice[5]);
+			glTexCoord2f(0.0, 1.0f); glVertex3fv(vertice[6]);
 			glTexCoord2f(0.0f, 0.0f); glVertex3fv(vertice[7]);
 		glEnd();
 }
