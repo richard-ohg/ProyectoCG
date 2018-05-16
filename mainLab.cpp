@@ -40,10 +40,26 @@ float movBrazoDer = 0.0;
 float movCuerpo = 0.0;
 
 #define MAX_FRAMES 200		//cuantos cuadros clave se van a utilizar (keyframes)
-int i_max_steps = 50;
+int i_max_steps = 90;
 int i_curr_steps = 0;
 typedef struct _frame
 {
+
+	float mov_pelotaX;
+	float mov_pelotaY;
+	float mov_pelotaZ;
+	float rot_pelotaX;
+	float rot_pelotaY;
+	float rot_pelotaZ;
+
+	float IncX;
+	float IncZ;
+	float IncY;
+	float IncRotX;
+	float IncRotY;
+	float IncRotZ;
+
+	/*
 	//Variables para GUARDAR Key Frames
 	float posX;		//Variable para PosicionX
 	float posY;		//Variable para PosicionY
@@ -77,12 +93,12 @@ typedef struct _frame
 
 	float movCuerpo;
 	float movCuerpoInc;
-
+	*/
 
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
-int FrameIndex = 19;			//introducir datos
+int FrameIndex = 0;			//introducir datos
 bool play = false;
 int playIndex = 0;
 
@@ -92,6 +108,23 @@ int playIndex = 0;
 int w = 500, h = 500;
 int frame = 0, time2, timebase = 0;
 char s[30];
+
+
+// Variables para keyframe
+float mov_pelotaX = 0.0;
+float mov_pelotaY = 0.0;
+float mov_pelotaZ = 0.0;
+float rot_pelotaX = 0.0;
+float rot_pelotaY = 0.0;
+float rot_pelotaZ = 0.0;
+
+float IncX = 0.0;
+float IncZ = 0.0;
+float IncY = 0.0;
+float IncRotX = 0.0;
+float IncRotY = 0.0;
+float IncRotZ = 0.0;
+
 
 //	Objeto para dibujar figuras
 Figures figures;
@@ -109,7 +142,7 @@ GLfloat Position2[]= { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
 float xx=0.0, yy = 0.0, zz = 0.0;
 float tamx = 1.0, tamy = 1.0, tamz = 1.0;
 
-//	Variables para animar al paloma
+//	Variables para animar a la paloma
 GLfloat pos_paloma_x = -7.f;
 GLfloat pos_paloma_y = 7.f;
 GLfloat pos_paloma_z = -7.f;
@@ -136,7 +169,7 @@ int estadopaloma = 1;
 //	Variables para animar la textura
 GLdouble estadoTelevision = 1.0;
 
-
+// Objeto de figuras.cpp
 CFiguras fig7;
 
 //	Texturas
@@ -189,8 +222,98 @@ CTexture plata;
 
 //CTexture tree;
 
-//CFiguras sky;
 const double PI = 3.1415926535897;
+
+
+
+void saveFrame ( void )
+{
+	
+	printf("frameindex %d\n",FrameIndex);			
+
+	KeyFrame[FrameIndex].mov_pelotaX = mov_pelotaX;
+	KeyFrame[FrameIndex].mov_pelotaY = mov_pelotaY;
+	KeyFrame[FrameIndex].mov_pelotaZ = mov_pelotaZ;
+	KeyFrame[FrameIndex].rot_pelotaX = rot_pelotaX;
+	KeyFrame[FrameIndex].rot_pelotaY = rot_pelotaY;
+	KeyFrame[FrameIndex].rot_pelotaZ = rot_pelotaZ;
+
+	KeyFrame[FrameIndex].giroNudillo1 = giroNudillo1;
+	KeyFrame[FrameIndex].giroNudillo1Z = giroNudillo1Z;
+	KeyFrame[FrameIndex].giroArt11 = giroArt11;
+	KeyFrame[FrameIndex].giroArt21 = giroArt21;
+	KeyFrame[FrameIndex].giroNudillo2 = giroNudillo2;
+	KeyFrame[FrameIndex].giroNudillo2Z = giroNudillo2Z;
+	KeyFrame[FrameIndex].giroArt12 = giroArt12;
+	KeyFrame[FrameIndex].giroArt22 = giroArt22;
+	KeyFrame[FrameIndex].giroNudillo3 = giroNudillo3;
+	KeyFrame[FrameIndex].giroArt13 = giroArt13;
+	KeyFrame[FrameIndex].giroArt23 = giroArt23;
+	KeyFrame[FrameIndex].giroNudillo4 = giroNudillo4;
+	KeyFrame[FrameIndex].giroArt14 = giroArt14;
+	KeyFrame[FrameIndex].giroArt24 = giroArt24;
+	KeyFrame[FrameIndex].giroNudillo5 = giroNudillo5;
+	KeyFrame[FrameIndex].giroArt15 = giroArt15;
+			
+	FrameIndex++;
+}
+
+void resetElements( void )
+{
+	transZ = KeyFrame[0].transZ;
+	transX = KeyFrame[0].transX;
+	giroX = KeyFrame[0].giroX;
+	giroY = KeyFrame[0].giroY;
+	giroZ = KeyFrame[0].giroZ;
+
+	giroNudillo1 = KeyFrame[0].giroNudillo1;
+	giroNudillo1Z = KeyFrame[0].giroNudillo1Z;
+	giroArt11 = KeyFrame[0].giroArt11;
+	giroArt21 = KeyFrame[0].giroArt21;
+	giroNudillo2 = KeyFrame[0].giroNudillo2;
+	giroNudillo2Z = KeyFrame[0].giroNudillo2Z;
+	giroArt12 = KeyFrame[0].giroArt12;
+	giroArt22 = KeyFrame[0].giroArt22;
+	giroNudillo3 = KeyFrame[0].giroNudillo3;
+	giroArt13 = KeyFrame[0].giroArt13;
+	giroArt23 = KeyFrame[0].giroArt23;
+	giroNudillo4 = KeyFrame[0].giroNudillo4;
+	giroArt14 = KeyFrame[0].giroArt14;
+	giroArt24 = KeyFrame[0].giroArt24;
+	giroNudillo5 = KeyFrame[0].giroNudillo5;
+	giroArt15 = KeyFrame[0].giroArt15;
+
+}
+
+void interpolation ( void )
+{
+	KeyFrame[playIndex].IncZ = (KeyFrame[playIndex + 1].transZ - KeyFrame[playIndex].transZ) / i_max_steps;
+	KeyFrame[playIndex].IncX = (KeyFrame[playIndex + 1].transX - KeyFrame[playIndex].transX) / i_max_steps;	
+	KeyFrame[playIndex].IncRotX = (KeyFrame[playIndex + 1].giroX - KeyFrame[playIndex].giroX) / i_max_steps;
+	KeyFrame[playIndex].IncRotY = (KeyFrame[playIndex + 1].giroY - KeyFrame[playIndex].giroY) / i_max_steps;
+	KeyFrame[playIndex].IncRotZ = (KeyFrame[playIndex + 1].giroZ - KeyFrame[playIndex].giroZ) / i_max_steps;	
+
+	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].giroNudillo1 - KeyFrame[playIndex].giroNudillo1) / i_max_steps;	
+	KeyFrame[playIndex].rotInc2 = (KeyFrame[playIndex + 1].giroArt11 - KeyFrame[playIndex].giroArt11) / i_max_steps;
+	KeyFrame[playIndex].rotInc3 = (KeyFrame[playIndex + 1].giroArt21 - KeyFrame[playIndex].giroArt21) / i_max_steps;
+	KeyFrame[playIndex].rotInc4 = (KeyFrame[playIndex + 1].giroNudillo2 - KeyFrame[playIndex].giroNudillo2) / i_max_steps;
+	KeyFrame[playIndex].rotInc5 = (KeyFrame[playIndex + 1].giroArt12 - KeyFrame[playIndex].giroArt12) / i_max_steps;
+	KeyFrame[playIndex].rotInc6 = (KeyFrame[playIndex + 1].giroArt22 - KeyFrame[playIndex].giroArt22) / i_max_steps;
+	KeyFrame[playIndex].rotInc7 = (KeyFrame[playIndex + 1].giroNudillo3 - KeyFrame[playIndex].giroNudillo3) / i_max_steps;	
+	KeyFrame[playIndex].rotInc8 = (KeyFrame[playIndex + 1].giroArt13 - KeyFrame[playIndex].giroArt13) / i_max_steps;
+	KeyFrame[playIndex].rotInc9 = (KeyFrame[playIndex + 1].giroArt23 - KeyFrame[playIndex].giroArt23) / i_max_steps;
+	KeyFrame[playIndex].rotInc10 = (KeyFrame[playIndex + 1].giroNudillo4 - KeyFrame[playIndex].giroNudillo4) / i_max_steps;
+	KeyFrame[playIndex].rotInc11 = (KeyFrame[playIndex + 1].giroArt14 - KeyFrame[playIndex].giroArt14) / i_max_steps;
+	KeyFrame[playIndex].rotInc12 = (KeyFrame[playIndex + 1].giroArt24 - KeyFrame[playIndex].giroArt24) / i_max_steps;
+	KeyFrame[playIndex].rotInc13 = (KeyFrame[playIndex + 1].giroNudillo5 - KeyFrame[playIndex].giroNudillo5) / i_max_steps;
+	KeyFrame[playIndex].rotInc14 = (KeyFrame[playIndex + 1].giroArt15 - KeyFrame[playIndex].giroArt15) / i_max_steps;
+	KeyFrame[playIndex].rotInc15 = (KeyFrame[playIndex + 1].giroNudillo1Z - KeyFrame[playIndex].giroNudillo1Z) / i_max_steps;
+	KeyFrame[playIndex].rotInc16 = (KeyFrame[playIndex + 1].giroNudillo2Z - KeyFrame[playIndex].giroNudillo2Z) / i_max_steps;
+
+}
+
+
+
 void InitGL ( GLvoid )     // Inicializamos parametros
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);				// Negro de fondo	
@@ -1116,7 +1239,8 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glPopMatrix();
 
 			glPushMatrix();
-
+				glTranslatef(mov_pelotaX, mov_pelotaY, mov_pelotaZ)
+				figures.u_esfera(2, 20, 20, ball.GLindex);
 			glPopMatrix();		
 
 		glPopMatrix(); 
@@ -1348,7 +1472,7 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 			objCamera.Position_Camera(10, 3, 16, 10, 3, 12, 0, 1, 0);
 			break;
 
-		//Tecla para colocar la camara a un lado de la alberca
+		//Tecla para colocar la camara en la esquina para ver el interior de la casa
 		case 'p':
 		case 'P':
 			//objCamera.Position_Camera(22.13, 6.69f, -38.55, -48.94, 2.5f, -69.66, 0, 1, 0);
@@ -1621,7 +1745,7 @@ void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas e
 		g_lookupdown -= 1.0f;
 		break;
 
-    case GLUT_KEY_DOWN:               // Presionamos tecla ABAJO...
+    case GLUT_KEY_DOWN:   // Presionamos tecla ABAJO...
 		g_lookupdown += 1.0f;
 		break;
 
@@ -1646,7 +1770,7 @@ int main ( int argc, char** argv )   // Main Function
   glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
   glutInitWindowSize  (2000, 2000);	// Tamaño de la Ventana
   glutInitWindowPosition (0, 0);	//Posicion de la Ventana
-  glutCreateWindow    ("Jerarquia"); // Nombre de la Ventana
+  glutCreateWindow    ("Proyecto"); // Nombre de la Ventana
   //glutFullScreen     ( );         // Full Screen
   InitGL ();						// Parametros iniciales de la aplicacion
   glutDisplayFunc     ( display );  //Indicamos a Glut función de dibujo
