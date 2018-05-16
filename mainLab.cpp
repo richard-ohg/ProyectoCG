@@ -128,11 +128,11 @@ GLfloat rot_pato = 0.f;
 GLfloat ant_pos_pato_z = 0.f;
 
 //	Variables para animar la pelota
-GLfloat pos_ball_x = 13.f;
+GLfloat pos_ball_x = 0.f;
 GLfloat pos_ball_y = 22.0f;
 GLfloat pos_ball_z = -5.6f;
 GLfloat rot_ball_x = 0.f;
-GLfloat par_pos_ball_x_ini = 13.f;
+GLfloat par_pos_ball_x_ini = 0.f;
 GLfloat par_pos_ball_y_ini = 22.0f;
 GLfloat par_pos_ball_z_ini = -5.6f;
 GLfloat v_ini_ball = 10;
@@ -437,7 +437,7 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	pasto.BuildGLTexture();
 	pasto.ReleaseImage();
 
-	madera.LoadTGA("textures/maderaa.tga");
+	madera.LoadTGA("textures/madera_clara.tga");
 	madera.BuildGLTexture();
 	madera.ReleaseImage();
 
@@ -730,9 +730,44 @@ void puertas(void){
 
 	//Puerta Frontal
 	glPushMatrix();
-		glTranslatef(4.8, 5.0, -0.4);
-		glScalef(4, 8, 1);
+		glTranslatef(4.8, 5.0, 18.005);
+		glPushMatrix();  //arco madera izq
+			glTranslatef(-3, 2, 0);
+			glScalef(2, 14, 0);
+			glBindTexture(GL_TEXTURE_2D, madera.GLindex);
+			
+			glBegin(GL_QUADS);
+				glTexCoord2f(1, 0); glVertex3f(0.5, -0.5, 0.5);
+				glTexCoord2f(0, 0); glVertex3f(-0.5, -0.5, 0.5);
+				glTexCoord2f(0, 1); glVertex3f(-0.5, 0.5, 0.5);
+				glTexCoord2f(1, 1); glVertex3f(0.5, 0.5, 0.5);
+			glEnd();
+		glPopMatrix();
+		glPushMatrix(); //arco madera der
+			glTranslatef(6, 2, 0);
+			glScalef(2, 14, 0);
+			glBindTexture(GL_TEXTURE_2D, madera.GLindex);
+			glBegin(GL_QUADS);
+				glTexCoord2f(1, 0); glVertex3f(0.5, -0.5, 0.5);
+				glTexCoord2f(0, 0); glVertex3f(-0.5, -0.5, 0.5);
+				glTexCoord2f(0, 1); glVertex3f(-0.5, 0.5, 0.5);
+				glTexCoord2f(1, 1); glVertex3f(0.5, 0.5, 0.5);
+			glEnd();
+		glPopMatrix();
+		glPushMatrix(); //arco madera sup
+			glTranslatef(1.5, 7.5, 0);
+			glScalef(7, 3, 0);
+			glBindTexture(GL_TEXTURE_2D, madera.GLindex);
+			glBegin(GL_QUADS);
+				glTexCoord2f(1, 0); glVertex3f(0.5, -0.5, 0.5);
+				glTexCoord2f(0, 0); glVertex3f(-0.5, -0.5, 0.5);
+				glTexCoord2f(0, 1); glVertex3f(-0.5, 0.5, 0.5);
+				glTexCoord2f(1, 1); glVertex3f(0.5, 0.5, 0.5);
+			glEnd();
+		glPopMatrix();
+		glScalef(4, 8, 0);
 		glBindTexture(GL_TEXTURE_2D, puertaFrente.GLindex);
+		
 		glBegin(GL_QUADS);
 			glTexCoord2f(1, 0); glVertex3f(0.5, -0.5, 0.5);
 			glTexCoord2f(0, 0); glVertex3f(-0.5, -0.5, 0.5);
@@ -743,9 +778,9 @@ void puertas(void){
 	glPopMatrix();
 
 	//Puerta garage
-	/*glPushMatrix();
-		glTranslatef(-6, 2.4, -6.99);
-		glScalef(8, 4.8, 1);
+	glPushMatrix();
+		glTranslatef(-6, 4.5, 18.005);
+		glScalef(12, 9, 1);
 		glBindTexture(GL_TEXTURE_2D, garage.GLindex);
 		glBegin(GL_QUADS);
 			glTexCoord2f(1, 0); glVertex3f(0.5, -0.5, 0.5);
@@ -753,7 +788,7 @@ void puertas(void){
 			glTexCoord2f(0, 1); glVertex3f(-0.5, 0.5, 0.5);
 			glTexCoord2f(1, 1); glVertex3f(0.5, 0.5, 0.5);
 		glEnd();
-	glPopMatrix();*/
+	glPopMatrix();
 
 }
 
@@ -1286,17 +1321,35 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 			//	Ejes de referencia
 			glPushMatrix();
-			glBegin(GL_LINES);
-			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(100.0, 0.0, 0.0);
+				glBegin(GL_LINES);
+				glVertex3f(0.0, 0.0, 0.0);
+				glVertex3f(100.0, 0.0, 0.0);
 
-			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(0.0, 100.0, 0.0);
+				glVertex3f(0.0, 0.0, 0.0);
+				glVertex3f(0.0, 100.0, 0.0);
 
-			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(0.0, 0.0, 100.0);
-			glEnd();
+				glVertex3f(0.0, 0.0, 0.0);
+				glVertex3f(0.0, 0.0, 100.0);
+				glEnd();
 			glPopMatrix();
+			glDisable(GL_LIGHTING);
+			glPushMatrix();
+				fachada();
+			glPopMatrix();
+			
+			glPushMatrix();
+				puertas();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(pos_ball_x, pos_ball_y, pos_ball_z);
+			glRotatef(rot_ball_x, 1, 0, 0);
+			figures.u_esfera(1, 20, 20, ball.GLindex);
+			glPopMatrix();
+
+
+
+
 			/*
 			glPushMatrix();
 			glTranslatef(11.4,0.4,-63.4);
@@ -1455,8 +1508,8 @@ void display ( void )   // Creamos la funcion donde se dibuja
 
 
 			glDisable(GL_LIGHTING);*/
-				fachada();
-				/*puertas();
+
+				/*
 				alberca();
 				patioTrasero();
 
@@ -1669,13 +1722,9 @@ void display ( void )   // Creamos la funcion donde se dibuja
 			glTranslatef(8.6, 9, -22.6);
 			glScalef(1, 3.8, 1.6);
 			figures.puerta(door.GLindex, false, true);
-			glPopMatrix();
-
-			glPushMatrix();
-			glTranslatef(pos_ball_x, pos_ball_y, pos_ball_z);
-			glRotatef(rot_ball_x, -1, 0, 0);
-			figures.u_esfera(1, 20, 20, ball.GLindex);
 			glPopMatrix();*/
+
+			
 
 		glPopMatrix(); 
 
@@ -1813,31 +1862,34 @@ void animacion()
 	//	Movimiento de la pelota
 	switch(estadoPelota){
 		case 1:
-			pos_ball_z -= 0.2;
+			pos_ball_z += 0.2;
 			rot_ball_x -= 1;
-			if (pos_ball_z <= -37.5) {
+			if (pos_ball_z >= 20.5) {
 				estadoPelota = 2;
 			}
 			break;
 		case 2:
-			pos_ball_z = -38.0 - (v_ini_ball * ball_t);
+			pos_ball_z = 21.0 + (v_ini_ball * ball_t);
 			pos_ball_y = par_pos_ball_y_ini + (v_ini_ball * sin(angle_ball) * ball_t 
 				- 0.5 * gravity * ball_t * ball_t);
 			ball_t += 0.01;
 
-			if (pos_ball_y <= 0)
+			if (pos_ball_y <= 1)
 			{
 				estadoPelota = 3;
 				xx = pos_ball_z;
+				printf("%f\n", xx);
 			}
 			break;
 		case 3:
-			rot_ball_x += 0.2;
+			pos_ball_z += 0.2;
+			if (pos_ball_z >= 48 )
+			{
+				estadoPelota = 4;
+			}
 			break;
 	}
 	
-//>>>>>>> refs/remotes/origin/master
-//>>>>>>> 24ff8ad8257540ac645e88e7afe1a4ca17ce7eeb
 
 
 	glutPostRedisplay();
@@ -2374,7 +2426,7 @@ void silla()
 	glScalef(0.5,0.25,0.5);
 	glColor3f(0.3529,0.1764,0.0862);
 	figures.u_prisma(madera.GLindex);
-	//glColor3f(1,1,1);
+	glColor3f(1,1,1);
 }
 
 void arbol(const GLuint &text)
@@ -3477,18 +3529,18 @@ void fachada()
 {
 	glPushMatrix();
 
-	//glTranslatef(9.5, 10.5, -18);
+	glTranslatef(0, 10.5, 0);
 	
 	//	Figura A (central)
 	
 	glPushMatrix();
-	glScalef(19, 21, -36);
+	glScalef(25, 21, -36);
 	figures.u_prisma_no_derecha(cuarzo.GLindex);	
 	glPopMatrix();
 
 	glEnable(GL_LIGHTING);
 	glPushMatrix();
-	glScalef(18.995, 20.995, -35.995);
+	glScalef(24.995, 20.995, -35.995);
 	figures.l_prisma_no_derecha(cuarzo.GLindex, metal_cromo.GLindex);	
 	glPopMatrix();
 	glDisable(GL_LIGHTING);

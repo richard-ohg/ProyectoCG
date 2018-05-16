@@ -2191,6 +2191,15 @@ void Figures::l_prisma_no_derecha(const GLuint &t1)
 	glTexCoord2f(0.0, 1.0); glVertex3fv(vertices[5]);
 	glEnd();
 
+	//	Derecha (1562)
+	glBegin(GL_POLYGON);
+	glNormal3f(-1, 0, 0);
+	glTexCoord2f(0.0, 0.0); glVertex3fv(vertices[1]);
+	glTexCoord2f(1.0, 0.0); glVertex3fv(vertices[5]);
+	glTexCoord2f(1.0, 1.0); glVertex3fv(vertices[6]);
+	glTexCoord2f(0.0, 1.0); glVertex3fv(vertices[2]);
+	glEnd();
+
 }
 
 void Figures::l_prisma_no_derecha(const GLuint &t1, const GLuint &t2)
@@ -2243,6 +2252,15 @@ void Figures::l_prisma_no_derecha(const GLuint &t1, const GLuint &t2)
 	glTexCoord2f(1.0, 0.0); glVertex3fv(vertices[2]);
 	glTexCoord2f(1.0, 1.0); glVertex3fv(vertices[6]);
 	glTexCoord2f(0.0, 1.0); glVertex3fv(vertices[7]);
+	glEnd();
+
+	//	Derecha (1562)
+	glBegin(GL_POLYGON);
+	glNormal3f(-1, 0, 0);
+	glTexCoord2f(0.0, 0.0); glVertex3fv(vertices[1]);
+	glTexCoord2f(1.0, 0.0); glVertex3fv(vertices[5]);
+	glTexCoord2f(1.0, 1.0); glVertex3fv(vertices[6]);
+	glTexCoord2f(0.0, 1.0); glVertex3fv(vertices[2]);
 	glEnd();
 
 	glBindTexture(GL_TEXTURE_2D, t2);
