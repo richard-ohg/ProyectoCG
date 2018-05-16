@@ -8,8 +8,8 @@
 //************************************************************//
 
 #include "texture.h"
-#include "figuras.h"
 #include "Camera.h"
+#include "figuras.h"
 #include "FigPropias.h"
 
 //	Prototipos de funciones
@@ -34,6 +34,7 @@ void taza_banio();
 void mueble_banio();
 void mueble_banio_toallas();
 void tele();
+void mesa_sala();
 /*int w = 500, h = 500;
 int frame=0,time,timebase=0;
 int deltaTime = 0;*/
@@ -103,7 +104,6 @@ int frame = 0, time2, timebase = 0;
 char s[30];
 
 //	Objeto para dibujar figuras
-//CFiguras figures;
 Figures figures;
 Figures mov_agua;
 
@@ -129,11 +129,11 @@ GLfloat ant_pos_pato_z = 0.f;
 
 //	Variables para animar la pelota
 GLfloat pos_ball_x = 0.f;
-GLfloat pos_ball_y = 22.0f;
+GLfloat pos_ball_y = 23.0f;
 GLfloat pos_ball_z = -5.6f;
 GLfloat rot_ball_x = 0.f;
 GLfloat par_pos_ball_x_ini = 0.f;
-GLfloat par_pos_ball_y_ini = 22.0f;
+GLfloat par_pos_ball_y_ini = 23.0f;
 GLfloat par_pos_ball_z_ini = -5.6f;
 GLfloat v_ini_ball = 10;
 GLfloat angle_ball = 3.141592 / 10;
@@ -153,7 +153,6 @@ GLdouble estadoTelevision = 1.0;
 //CTexture text3;	//Flecha
 
 CFiguras fig7;
-
 //	Texturas para el refrigerador
 CTexture window_texture;
 CTexture cuarzo;
@@ -215,6 +214,8 @@ CTexture estufaCal;
 CTexture tree_tex;
 CTexture door;
 CTexture ball;
+CTexture estante;
+CTexture fondo_lad;
 
 //CTexture tree;
 
@@ -296,6 +297,14 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	garage.LoadTGA("textures/garage.tga");
 	garage.BuildGLTexture();
 	garage.ReleaseImage();
+
+	estante.LoadTGA("textures/estante.tga");
+	estante.BuildGLTexture();
+	estante.ReleaseImage();
+
+	fondo_lad.LoadTGA("textures/ladrillo_fachada.tga");
+	fondo_lad.BuildGLTexture();
+	fondo_lad.ReleaseImage();
 
 	t1.LoadTGA("textures/t1.tga");
 	t1.BuildGLTexture();
@@ -733,7 +742,7 @@ void puertas(void){
 		glTranslatef(4.8, 5.0, 18.005);
 		glPushMatrix();  //arco madera izq
 			glTranslatef(-3, 2, 0);
-			glScalef(2, 14, 0);
+			glScalef(2, 14, 1);
 			glBindTexture(GL_TEXTURE_2D, madera.GLindex);
 			
 			glBegin(GL_QUADS);
@@ -745,7 +754,7 @@ void puertas(void){
 		glPopMatrix();
 		glPushMatrix(); //arco madera der
 			glTranslatef(6, 2, 0);
-			glScalef(2, 14, 0);
+			glScalef(2, 14, 1);
 			glBindTexture(GL_TEXTURE_2D, madera.GLindex);
 			glBegin(GL_QUADS);
 				glTexCoord2f(1, 0); glVertex3f(0.5, -0.5, 0.5);
@@ -756,7 +765,7 @@ void puertas(void){
 		glPopMatrix();
 		glPushMatrix(); //arco madera sup
 			glTranslatef(1.5, 7.5, 0);
-			glScalef(7, 3, 0);
+			glScalef(7, 3, 1);
 			glBindTexture(GL_TEXTURE_2D, madera.GLindex);
 			glBegin(GL_QUADS);
 				glTexCoord2f(1, 0); glVertex3f(0.5, -0.5, 0.5);
@@ -765,16 +774,36 @@ void puertas(void){
 				glTexCoord2f(1, 1); glVertex3f(0.5, 0.5, 0.5);
 			glEnd();
 		glPopMatrix();
-		glScalef(4, 8, 0);
+
+		glPushMatrix(); //fondo ladrillo
+			glTranslatef(1.5, 2, 0);
+			glScalef(11, 14, 0);
+			glBindTexture(GL_TEXTURE_2D, fondo_lad.GLindex);
+			glBegin(GL_QUADS);
+				glTexCoord2f(1, 0); glVertex3f(0.5, -0.5, 0.5);
+				glTexCoord2f(0, 0); glVertex3f(-0.5, -0.5, 0.5);
+				glTexCoord2f(0, 1); glVertex3f(-0.5, 0.5, 0.5);
+				glTexCoord2f(1, 1); glVertex3f(0.5, 0.5, 0.5);
+			glEnd();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(0, -4.5, 1);
+			glScalef(3, 1 , 2);
+			figures.l_prisma(pared_interior.GLindex);
+		glPopMatrix();
+
+		glScalef(3, 8, 1);
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.1);
 		glBindTexture(GL_TEXTURE_2D, puertaFrente.GLindex);
-		
 		glBegin(GL_QUADS);
 			glTexCoord2f(1, 0); glVertex3f(0.5, -0.5, 0.5);
 			glTexCoord2f(0, 0); glVertex3f(-0.5, -0.5, 0.5);
 			glTexCoord2f(0, 1); glVertex3f(-0.5, 0.5, 0.5);
 			glTexCoord2f(1, 1); glVertex3f(0.5, 0.5, 0.5);
 		glEnd();
-
+		glDisable(GL_ALPHA_TEST);
 	glPopMatrix();
 
 	//Puerta garage
@@ -1318,7 +1347,6 @@ void display ( void )   // Creamos la funcion donde se dibuja
 				glEnable(GL_LIGHTING);
 			glPopMatrix();
 
-
 			//	Ejes de referencia
 			glPushMatrix();
 				glBegin(GL_LINES);
@@ -1332,20 +1360,111 @@ void display ( void )   // Creamos la funcion donde se dibuja
 				glVertex3f(0.0, 0.0, 100.0);
 				glEnd();
 			glPopMatrix();
-			glDisable(GL_LIGHTING);
-			glPushMatrix();
+
+			glPushMatrix(); //fachada
 				fachada();
 			glPopMatrix();
 			
-			glPushMatrix();
+			glPushMatrix(); //puerta entrada y garage
 				puertas();
 			glPopMatrix();
 
-			glPushMatrix();
+			glPushMatrix(); //pelota
 			glTranslatef(pos_ball_x, pos_ball_y, pos_ball_z);
 			glRotatef(rot_ball_x, 1, 0, 0);
 			figures.u_esfera(1, 20, 20, ball.GLindex);
 			glPopMatrix();
+
+			glPushMatrix(); //ventana 
+				glTranslatef(7.9, 6, 18);
+				glScalef(2.5, 8.4, 1);
+				figures.ventana(window_texture.GLindex, true, false, false, 
+				false, false, false);
+			glPopMatrix();
+
+			glPushMatrix(); //chimenea
+				glDisable(GL_LIGHTING);
+				glTranslatef(-11.3, 13, -16.8);
+				
+				glPushMatrix(); //estante
+					glTranslatef(7, -9.5, -1);
+					glPushMatrix(); //sillon 1
+						glTranslatef(10.5,-2, 1);
+						glPushMatrix(); //sillon 2
+							glTranslatef(5.5, 0, 5.5);
+							glRotatef(270, 0, 1, 0);
+							glScalef(3,2,2);
+							sillon_uno();
+						glPopMatrix();
+						glPushMatrix(); // mesa centro de la sala
+							glTranslatef(0, .5, 8);
+							glPushMatrix(); //sillón individual
+								glTranslatef(-6, -.5, -2);
+								glRotatef(90, 0, 1, 0);
+								glScalef(2,2,2);
+								sillon_dos();
+							glPopMatrix();
+							glScalef(2,0.5,0.75);
+							mesa_sala();
+						glPopMatrix();
+						glScalef(3,2,2);
+						sillon_uno();
+					glPopMatrix();
+					glScalef(10, 8, 0);
+					glEnable(GL_ALPHA_TEST);
+					glAlphaFunc(GL_GREATER, 0.1);
+					figures.u_prisma(estante.GLindex);
+					glDisable(GL_ALPHA_TEST);
+				glPopMatrix();
+
+				glScalef(2, 26, 2);
+				figures.u_prisma(pisoPatioT.GLindex);
+				glColor3f(1,1,1);
+				glEnable(GL_LIGHTING);
+			glPopMatrix();
+
+
+			glPushMatrix();
+				//glTranslatef(0,0,34);
+				glPushMatrix();
+					glTranslatef(-7.25, 2 ,-1.5);
+					//glRotatef(-90,0,1,0);
+					glScalef(2,2,2);
+					silla();
+				glPopMatrix();
+
+				glPushMatrix();
+					glTranslatef(-7.25, 2, 4.5);
+					glRotatef(180,0,1,0);
+					glScalef(2,2,2);
+					silla();
+				glPopMatrix();
+
+				glPushMatrix();
+					glTranslatef(-10, 2, 1.5);
+					glRotatef(90,0,1,0);
+					glScalef(2,2,2);
+					silla();
+				glPopMatrix();
+
+				glPushMatrix();
+					glTranslatef(-4.5, 2, 1.5);
+					glRotatef(-90,0,1,0);
+					glScalef(2,2,2);
+					silla();
+				glPopMatrix();
+
+				glPushMatrix();
+					glTranslatef(-7.2, -1, 1.5);
+					glRotatef(45,0,1,0);
+					glScalef(1.5,1,1.5);
+					mesa_comedor();
+				glPopMatrix();
+				glColor3f(1,1,1);
+			glPopMatrix();
+
+	
+
 
 
 
@@ -1791,9 +1910,7 @@ void animacion()
 			break;
 	}
 
-//<<<<<<< HEAD
-//=======
-//<<<<<<< HEAD
+
 	//Movimiento del monito
 	if (play)
 	{
@@ -3529,33 +3646,81 @@ void fachada()
 {
 	glPushMatrix();
 
-	glTranslatef(0, 10.5, 0);
+	glTranslatef(0, 11, 0);
 	
 	//	Figura A (central)
 	
 	glPushMatrix();
-	glScalef(25, 21, -36);
-	figures.u_prisma_no_derecha(cuarzo.GLindex);	
+		glScalef(26, 22, 36);
+		figures.u_prisma_no_derecha(cuarzo.GLindex);	
 	glPopMatrix();
 
 	glEnable(GL_LIGHTING);
 	glPushMatrix();
-	glScalef(24.995, 20.995, -35.995);
-	figures.l_prisma_no_derecha(cuarzo.GLindex, metal_cromo.GLindex);	
+		glScalef(25.995, 21.995, 35.995);
+		figures.l_prisma_no_derecha(cuarzo.GLindex, metal_cromo.GLindex);	
 	glPopMatrix();
 	glDisable(GL_LIGHTING);
 	
 
-	//	Chimenea
-
-	//glColor3f(1, 0, 0);
-	glPushMatrix();
-	glTranslatef(-10.501, 1.5, -11.5);
-	glScalef(2, 24, 2);
-	figures.u_prisma(pisoPatioT.GLindex);
-	glPopMatrix();
-
 	glColor3f(1, 1, 1);
 
 	glPopMatrix();
+}
+
+void mesa_sala()
+{
+	glPushMatrix(); // stack de primer prisma medio - frente
+			glPushMatrix(); // stack de segundo prisma medio - medio
+			glTranslatef(0.0, 0.0, -2.5);
+				glPushMatrix(); // stack de tercer prisma medio - atrás
+				glTranslatef(0.0, 0.0, -2.5);
+					glPushMatrix(); //stack de cuarto prisma derecha - atrás
+					glTranslatef(1.25, -1.5, 0.0);
+						glPushMatrix(); //stack de quinto prisma derecha - medio
+						glTranslatef(0.0, 1.5, 2.5);
+							glPushMatrix(); //stack de sexto prisma derecha - frente
+							glTranslatef(0.0, -1.5, 2.5);
+								//glColor3f(1.0, 1.0, 1.0);
+								glScalef(0.5, 4.0, 1.0);
+								figures.prisma(madera.GLindex, madera.GLindex);
+							glPopMatrix();
+							//glColor3f(1.0, 1.0, 1.0);
+							glScalef(0.5, 1.0, 4.0);
+							figures.prisma(madera.GLindex, madera.GLindex);
+						glPopMatrix();
+						//glColor3f(1.0, 1.0, 1.0);
+						glScalef(0.5, 4.0, 1.0);
+						figures.prisma(madera.GLindex, madera.GLindex);
+					glPopMatrix();
+					glPushMatrix(); //stack de séptimo prisma izquierda - atrás
+					glTranslatef(-1.25, -1.5, 0.0);
+						glPushMatrix(); //stack de octavo prisma izquierda - medio
+						glTranslatef(0.0, 1.5, 2.5);
+							glPushMatrix(); //stack de noveno prisma izquierda - medio
+							glTranslatef(0.0, -1.5, 2.5);
+								//glColor3f(1.0, 1.0, 1.0);
+								glScalef(0.5, 4.0, 1.0);
+								figures.prisma(madera.GLindex, madera.GLindex);
+							glPopMatrix();
+							//glColor3f(1.0, 1.0, 1.0);
+							glScalef(0.5, 1.0, 4.0);
+							figures.prisma(madera.GLindex,madera.GLindex);
+						glPopMatrix();
+						//glColor3f(1.0, 1.0, 1.0);
+						glScalef(0.5, 4.0,1.0);
+						figures.prisma(madera.GLindex, madera.GLindex);
+					glPopMatrix();
+					//glColor3f(1.0, 1.0, 1.0);
+					glScalef(2.0, 1.0, 1.0);
+					figures.prisma(madera.GLindex, madera.GLindex);
+				glPopMatrix();
+				//glColor3f(1.0, 1.0, 1.0);
+				glScalef(2.0, 1.0, 4.0);
+				figures.prisma(madera.GLindex, ball.GLindex);
+			glPopMatrix();
+			//glColor3f(1.0, 1.0, 1.0);
+			glScalef(2.0,1.0,1.0);  
+			figures.prisma(madera.GLindex, madera.GLindex);	
+		glPopMatrix();
 }

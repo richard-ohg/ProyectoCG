@@ -12,8 +12,10 @@ class Figures
 {
 
 	public:
+		void prisma(const GLuint &textura1, const GLuint &textura6);
 		void u_prisma(const GLuint &t1);
 		void l_prisma(const GLuint &t1);
+		void l_prisma_frontal(const GLuint &t1);
 		void u_cono(const GLfloat &r, const GLfloat &h, const GLfloat &res, const GLuint &t1);
 		void u_prisma_trapecio(float altura, float largo, float profundidad, GLuint text);
 		void u_prisma_tele(float altura, float largo, float profundidad, GLuint text, GLuint tex2);
